@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>CompuCom | Conversational Staging</title>
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style type="css/text">
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        main {
+            flex: 1 0 auto;
+        }
+     
+  </style>
+    <script>
+        var loaded = false;
+
+        function addReset() {
+            console.log('resetting the widget');
+            window._bcvmw.closeChat();
+        }
+        $(document).ready(function () {
+            //M.updateTextFields();
+
+            $('#channel').blur(function () {
+                let channel = document.getElementById('channel').value;
+                console.log('Applying Context: channel=' + $(this).val());
+            });
+
+            $('#articleVisibility').blur(function () {
+                let articleVisibility = document.getElementById('articleVisibility').value;
+                console.log('Applying Context: articleVisibility=' + $(this).val());
+            });
+            $('#conversational').blur(function () {
+                let conversational = document.getElementById('conversational').value;
+                console.log('Applying Context: conversational=' + $(this).val());
+            });
+
+            $('#save_context').click(function () {
+                if (window._bcvmw) {
+                    window._bcvmw.closeChat();
+                }
+
+                callBold360();
+
+
+            });
+            $('#clear_context').click(function () {
+                addReset();
+            });
+        });
+
+
+        function callBold360() {
+            console.log('calling Bold360');
+            var debug = true;
+            window._bcvma = window._bcvma || [];
+            _bcvma.push(["setAccountID", "738773763303706931"]);
+            _bcvma.push(["setParameter", "WebsiteID", "733394541877286174"]);
+            _bcvma.push(["setParameter", "VisitName", ""]);
+            _bcvma.push(["setParameter", "VisitPhone", ""]);
+            _bcvma.push(["setParameter", "VisitEmail", ""]);
+            _bcvma.push(["setParameter", "VisitRef", ""]);
+            _bcvma.push(["setParameter", "VisitInfo", ""]);
+            _bcvma.push(["setParameter", "CustomUrl", ""]);
+            _bcvma.push(["setParameter", "WindowParameters", ""]);
+            _bcvma.push(["addFloat", {
+                type: "chat",
+                id: "733473260852938143"
+            }]);
+            _bcvma.push(["pageViewed"]);
+            var bcLoad = function () {
+                if (window.bcLoaded) return;
+                window.bcLoaded = true;
+                var vms = document.createElement("script");
+                vms.type = "text/javascript";
+                vms.async = true;
+                vms.src = ('https:' == document.location.protocol ? 'https://' :
+                    'http://') +
+                    "vmss.boldchat.com/aid/738773763303706931/bc.vms4/vms.js";
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(vms, s);
+            };
+            if (window.pageViewer && pageViewer.load) pageViewer.load();
+            else if (document.readyState == "complete") bcLoad();
+            else if (window.addEventListener) window.addEventListener('load', bcLoad, false);
+            else window.attachEvent('onload', bcLoad);
+
+            //Nanorep object -> Added By Pablo Rovelo
+            loaded = true;
+            window.nanorep = window.nanorep || {};
+            nanorep.floatingWidget = nanorep.floatingWidget || {};
+            nanorep.floatingWidget._calls = nanorep.floatingWidget._calls || [];
+            nanorep.floatingWidget._calls.push(['init', function () {
+
+            }], ['load', function () {
+                var channel = document.getElementById('channel').value;
+                var articleVisibility = document.getElementById('articleVisibility').value;
+                var conversational = document.getElementById('conversational').value;
+                let boldObject = {
+                    "Channel": (channel ? channel : null),
+                    "ArticleVisibility": (articleVisibility ? articleVisibility : null),
+                    "Conversational": (conversational ? conversational : null)
+                }
+                nanorep.floatingWidget.getContext().then(function (data) {
+                    var context = Object.assign({}, data, boldObject);
+                    nanorep.floatingWidget.setContext(context);
+                });
+            }]);
+
+            window.openEgain = function () {
+                let egain = {
+                    subActivity: 'Chat',
+                    entryPointId: '1003',
+                    templateName: 'servicenow',
+                    languageCode: 'en',
+                    countryCode: 'US',
+                    ver: 'v11',
+                    fieldname_1: 'CompuCom Systems, Inc.',
+                    fieldname_2: 'David',
+                    fieldname_3: 'Odom',
+                    fieldname_4: 'david.odom@compucom.com',
+                    fieldname_6: 'david.odom@compucom.com',
+                    fieldname_7: 'CompuCom Systems, Inc.',
+                    fieldname_8: 'Bold360AI test'
+                }
+                //
+                //https://egainqc.compucom.com/system/templates/chat/servicenow/chat.html?subActivity=Chat&entryPointId=1003&templateName=servicenow&languageCode=en&countryCode=US&ver=v11&fieldname_1=CompuCom%20Systems,%20Inc.&fieldname_2=David&fieldname_3=Odom&fieldname_4=david.odom@compucom.com&fieldname_6=david.odom@compucom.com&fieldname_7=CompuCom%20Systems,%20Inc.&fieldname_8=Bold360AI%20test
+                let url =
+                    `https://egainqc.compucom.com/system/templates/chat/servicenow/chat.html?subActivity=${egain.subActivity}&entryPointId=${egain.entryPointId}&templateName=${egain.templateName}&languageCode=${egain.languageCode}&countryCode=${egain.countryCode}&ver=${egain.ver}&fieldname_1=${egain.fieldname_1}&fieldname_2=${egain.fieldname_2}&fieldname_3=${egain.fieldname_3}&fieldname_4=${egain.fieldname_4}&fieldname_6=${egain.fieldname_6}&fieldname_7=${egain.fieldname_7}&fieldname_8=${egain.fieldname_8}`;
+                let params =
+                    'scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width=0,height=0,left=-1000,top=-1000';
+                open(url, 'eGain', params);
+                console.log('Closing the window...');
+                window.nanorep.floatingWidget.destroy();
+                window._bcvm.setCookie('_bc-curl', '', -1);
+                window._bcvmw.closeChat();
+                return 'Transferring you to a Live Chat agent';
+            }
+
+
+            setTimeout(function () {
+                console.log('Clicking button');
+                $('.bcFloat div img').click();
+            }, 200);
+
+        }
+
+        //nanorep.floatingWidget.close();
+    </script>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper  blue-grey lighten-5">
+            <a href="#" class="brand-logo center">
+                <img class="responsive-img center-align"
+                    src="https://www.compucom.com/sites/default/files/Vector-CompuCom-Logo-Red.svg"
+                    style="height:50px; vertical-align:middle;" alt="Home">
+            </a>
+        </div>
+    </nav>
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    <p class="">Please use " | " when more than one item for each input</p>
+                </div>
+
+            </div>
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+
+                            <input id="channel" type="text" class="validate" value="adecco | compucom">
+                            <label for="channel">Channel</label>
+
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="articleVisibility" type="text" class="validate" value="internal">
+                            <label for="articleVisibility">Article Visibility</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="conversational" type="text" class="validate" value="include">
+                            <label for="conversational">Conversational</label>
+                        </div>
+                        <div class="input-field col s12 right-align">
+                            <a id="save_context" class="waves-effect waves-light btn-large red darken-4" href="#"><i
+                                    class="material-icons right">sync</i> Load </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+
+    <footer class="page-footer blue-grey lighten-5" style="position:fixed;bottom:0;left:0;width:100%;"">
+        <div class=" container">
+        <div class="row">
+            <div class="col l12 s12">
+                <p style="font-size: 9px;color:#444;">This page is provided by LogMeIn's Professional Services "as is" and "with all faults."
+                    LogMeIn
+                    makes no representations or warranties of any kind concerning the safety, suitability, lack of
+                    viruses, inaccuracies, typographical errors, or other harmful components of this test page.
+                    There are inherent dangers in the use of any software, and you are solely responsible for
+                    determining whether this page is compatible with your equipment and other software installed on
+                    your equipment. You are also solely responsible for the protection of your equipment and backup
+                    of your data, and LogMeIn will not be liable for any damages you may suffer in connection with
+                    using, modifying, or distributing this page</p>
+            </div>
+        </div>
+        </div>
+    </footer>
+
+    <!-- BoldChat Customer Monitor HTML v5.00 (Website=Staging,ChatButton=Bold360AI Staging,ChatInvitation=) -->
+    <script type="text/javascript">
+        //Killing the session using the sdk
+        window.addEventListener("beforeunload", function (e) {
+            // console.log('on unload');
+            // window.nanorep.floatingWidget.destroy();
+            // window._bcvm.setCookie('_bc-curl', '', -1);
+        }, false);
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-127177608-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-127177608-2');
+    </script>
+
+</body>
+
+</html>
